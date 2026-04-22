@@ -2,6 +2,23 @@
 
 Relinted reformats C/C++ source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original C/C++ syntax and semantics.
 
+## Build
+
+**Requirements:** Go 1.22+
+
+```bash
+just build          # compiles the relinted binary
+just test           # runs all unit tests
+just run <input.c>  # runs the formatter
+```
+
+Alternatively:
+
+```bash
+go build -o relinted ./cmd/relinted/
+./relinted <input.c> [output.c]
+```
+
 ## ✨ Features
 
 - 🔀 **Brace Relocation**: Moves leading `{` and `}` to the end of the previous line
