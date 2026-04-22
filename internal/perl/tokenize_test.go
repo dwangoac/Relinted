@@ -24,71 +24,71 @@ func checkSegments(t *testing.T, input string, expected []tokenizer.Segment) {
 
 func TestTokenize_CodeOnly(t *testing.T) {
 	checkSegments(t, "my $x = 1;\n", []tokenizer.Segment{
-		{tokenizer.Code, "my $x = 1;\n"},
+		{Type: tokenizer.Code, Text: "my $x = 1;\n"},
 	})
 }
 
 func TestTokenize_HashComment(t *testing.T) {
 	checkSegments(t, "my $x = 1; # comment\n", []tokenizer.Segment{
-		{tokenizer.Code, "my $x = 1; "},
-		{tokenizer.CommentLine, "# comment\n"},
+		{Type: tokenizer.Code, Text: "my $x = 1; "},
+		{Type: tokenizer.CommentLine, Text: "# comment\n"},
 	})
 }
 
 func TestTokenize_DoubleQuoteString(t *testing.T) {
 	checkSegments(t, "print \"hello\";\n", []tokenizer.Segment{
-		{tokenizer.Code, "print "},
-		{tokenizer.String, "\"hello\""},
-		{tokenizer.Code, ";\n"},
+		{Type: tokenizer.Code, Text: "print "},
+		{Type: tokenizer.String, Text: "\"hello\""},
+		{Type: tokenizer.Code, Text: ";\n"},
 	})
 }
 
 func TestTokenize_DoubleQuoteStringWithEscape(t *testing.T) {
 	checkSegments(t, "print \"hello\\n\";\n", []tokenizer.Segment{
-		{tokenizer.Code, "print "},
-		{tokenizer.String, "\"hello\\n\""},
-		{tokenizer.Code, ";\n"},
+		{Type: tokenizer.Code, Text: "print "},
+		{Type: tokenizer.String, Text: "\"hello\\n\""},
+		{Type: tokenizer.Code, Text: ";\n"},
 	})
 }
 
 func TestTokenize_SingleQuoteString(t *testing.T) {
 	checkSegments(t, "my $x = 'hello';\n", []tokenizer.Segment{
-		{tokenizer.Code, "my $x = "},
-		{tokenizer.String, "'hello'"},
-		{tokenizer.Code, ";\n"},
+		{Type: tokenizer.Code, Text: "my $x = "},
+		{Type: tokenizer.String, Text: "'hello'"},
+		{Type: tokenizer.Code, Text: ";\n"},
 	})
 }
 
 func TestTokenize_SingleQuoteStringWithEscape(t *testing.T) {
 	checkSegments(t, "my $x = 'it\\'s';\n", []tokenizer.Segment{
-		{tokenizer.Code, "my $x = "},
-		{tokenizer.String, "'it\\'s'"},
-		{tokenizer.Code, ";\n"},
+		{Type: tokenizer.Code, Text: "my $x = "},
+		{Type: tokenizer.String, Text: "'it\\'s'"},
+		{Type: tokenizer.Code, Text: ";\n"},
 	})
 }
 
 func TestTokenize_Regex(t *testing.T) {
 	checkSegments(t, "if ($x =~ /pattern/) {\n", []tokenizer.Segment{
-		{tokenizer.Code, "if ($x =~ "},
-		{tokenizer.String, "/pattern/"},
-		{tokenizer.Code, ") {\n"},
+		{Type: tokenizer.Code, Text: "if ($x =~ "},
+		{Type: tokenizer.String, Text: "/pattern/"},
+		{Type: tokenizer.Code, Text: ") {\n"},
 	})
 }
 
 func TestTokenize_RegexWithEscape(t *testing.T) {
 	checkSegments(t, "if ($x =~ /pat\\/tern/) {\n", []tokenizer.Segment{
-		{tokenizer.Code, "if ($x =~ "},
-		{tokenizer.String, "/pat\\/tern/"},
-		{tokenizer.Code, ") {\n"},
+		{Type: tokenizer.Code, Text: "if ($x =~ "},
+		{Type: tokenizer.String, Text: "/pat\\/tern/"},
+		{Type: tokenizer.Code, Text: ") {\n"},
 	})
 }
 
 func TestTokenize_Mixed(t *testing.T) {
 	checkSegments(t, "my $x = \"hi\"; # comment\n", []tokenizer.Segment{
-		{tokenizer.Code, "my $x = "},
-		{tokenizer.String, "\"hi\""},
-		{tokenizer.Code, "; "},
-		{tokenizer.CommentLine, "# comment\n"},
+		{Type: tokenizer.Code, Text: "my $x = "},
+		{Type: tokenizer.String, Text: "\"hi\""},
+		{Type: tokenizer.Code, Text: "; "},
+		{Type: tokenizer.CommentLine, Text: "# comment\n"},
 	})
 }
 

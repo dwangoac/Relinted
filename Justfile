@@ -6,6 +6,12 @@ build:
 test:
     go test ./internal/... ./cmd/...
 
+test-c:
+    go test ./internal/formatter/... ./internal/tokenizer/... ./internal/io/...
+
+test-perl:
+    go test ./internal/perl/...
+
 run:
     go run ./cmd/relinted/
 
