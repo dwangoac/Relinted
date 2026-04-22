@@ -1,0 +1,8 @@
+# Compiled binary
+relinted
+
+# Debug files
+debug_maxlen.go
+
+# Session/plan files
+.opencode/
