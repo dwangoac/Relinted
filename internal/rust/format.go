@@ -78,6 +78,9 @@ func Format(input string) string {
 		trimmed := strings.TrimRightFunc(content, unicode.IsSpace)
 		punct, rest := extractTrailingPunctuation(trimmed)
 		content = rest
+		if strings.TrimSpace(content) == "" {
+			content = ""
+		}
 
 		data[i] = lineData{
 			content:         content,

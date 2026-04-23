@@ -10,6 +10,7 @@ import (
 	"relinted/internal/formatter"
 	"relinted/internal/io"
 	"relinted/internal/perl"
+	"relinted/internal/rust"
 )
 
 var extToLang = map[string]string{
@@ -19,6 +20,7 @@ var extToLang = map[string]string{
 	".cc":  "c",
 	".pl":  "perl",
 	".pm":  "perl",
+	".rs":  "rust",
 }
 
 func detectLanguage(path string) string {
@@ -60,9 +62,11 @@ func main() {
 		output = formatter.Format(content)
 	case "perl":
 		output = perl.Format(content)
+	case "rust":
+		output = rust.Format(content)
 	default:
 		fmt.Fprintf(os.Stderr, "Error: unsupported language %q\n", lang)
-		fmt.Fprintf(os.Stderr, "Supported languages: c, perl\n")
+		fmt.Fprintf(os.Stderr, "Supported languages: c, perl, rust\n")
 		os.Exit(1)
 	}
 
