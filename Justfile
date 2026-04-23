@@ -12,6 +12,9 @@ test-c:
 test-perl:
     go test ./internal/perl/...
 
+test-rust:
+    go test ./internal/rust/...
+
 run:
     go run ./cmd/relinted/
 
