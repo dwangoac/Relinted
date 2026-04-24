@@ -6,3 +6,10 @@ debug_maxlen.go
 
 # Session/plan files
 .opencode/
+
+# Compiled binaries
+*.test
+go.test
+
+# Git worktree directories
+.worktree/
