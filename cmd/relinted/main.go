@@ -36,7 +36,7 @@ func detectLanguage(path string) string {
 func main() {
 	var langFlag string
 	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js]")
-	flag.StringVar(&langFlag, "lang", "", "Language to use (overrides extension detection) [c, perl, rust, js]")
+	flag.StringVar(&langFlag, "lang", "", "Same as -l")
 	flag.Parse()
 
 	args := flag.Args()
