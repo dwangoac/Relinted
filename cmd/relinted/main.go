@@ -9,6 +9,7 @@ import (
 
 	"relinted/internal/formatter"
 	"relinted/internal/io"
+	"relinted/internal/js"
 	"relinted/internal/perl"
 	"relinted/internal/rust"
 )
@@ -20,6 +21,7 @@ var extToLang = map[string]string{
 	".cc":  "c",
 	".pl":  "perl",
 	".pm":  "perl",
+	".js":  "js",
 	".rs":  "rust",
 }
 
@@ -33,8 +35,8 @@ func detectLanguage(path string) string {
 
 func main() {
 	var langFlag string
-	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust]")
-	flag.StringVar(&langFlag, "lang", "", "Language to use (overrides extension detection) [c, perl, rust]")
+	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js]")
+	flag.StringVar(&langFlag, "lang", "", "Language to use (overrides extension detection) [c, perl, rust, js]")
 	flag.Parse()
 
 	args := flag.Args()
@@ -62,11 +64,13 @@ func main() {
 		output = formatter.Format(content)
 	case "perl":
 		output = perl.Format(content)
+	case "js":
+		output = js.Format(content)
 	case "rust":
 		output = rust.Format(content)
 	default:
 		fmt.Fprintf(os.Stderr, "Error: unsupported language %q\n", lang)
-		fmt.Fprintf(os.Stderr, "Supported languages: c, perl, rust\n")
+		fmt.Fprintf(os.Stderr, "Supported languages: c, perl, rust, js\n")
 		os.Exit(1)
 	}
 
