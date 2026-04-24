@@ -23,15 +23,15 @@ go build -o relinted ./cmd/relinted/
 ./relinted [-l|--lang lang] <input> [output]
 ```
 
-## ✨ Features
+## Features
 
-- 🔀 **Brace Relocation**: Moves leading `{` and `}` to the end of the previous line
-- 📏 **Right Alignment**: Aligns trailing `;`, `{`, and `}` exactly one space past the longest line in the file
-- 📐 **Indentation Preservation**: Maintains original indentation when relocating leading braces
-- 🗑️ **Smart Empty Line Handling**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
-- 🐇 **Tab & Whitespace Normalization**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
-- 📤 **Flexible I/O**: Outputs to `stdout` by default, or writes to a specified output file
-- 🌐 **Multi-Language**: Supports C/C++, Perl, Rust, and JavaScript with auto-detection from file extension
+- **Brace Relocation**: Moves leading `{` and `}` to the end of the previous line
+- **Right Alignment**: Aligns trailing `;`, `{`, and `}` exactly one space past the longest line in the file
+- **Indentation Preservation**: Maintains original indentation when relocating leading braces
+- **Smart Empty Line Handling**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
+- **Tab & Whitespace Normalization**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
+- **Flexible I/O**: Outputs to `stdout` by default, or writes to a specified output file
+- **Multi-Language**: Supports C/C++, Perl, Rust, and JavaScript with auto-detection from file extension
 
 ### Arguments
 | Argument        | Description                                                                            |
@@ -72,7 +72,7 @@ The `-l`/`--lang` flag overrides extension detection.
 ./relinted input.pl output.pl
 ```
 
-## 🔍 How It Works
+## How It Works
 
 1. **Reads & Normalizes**: Opens the input file, expands tabs to 4 spaces if present, and strips trailing whitespace/newlines
 2. **Calculates Alignment Column**: Finds the maximum line length (`max_len`) in the original file
@@ -83,7 +83,7 @@ The `-l`/`--lang` flag overrides extension detection.
 4. **Filters & Pads**: Removes lines that only became empty due to brace relocation, then pads each line to `max_len` and appends queued punctuation exactly one space past the maximum width
 5. **Outputs**: Writes the reformatted code to `stdout` or the specified output file
 
-## 📝 Example Transformation
+## Example Transformations
 
 **Before (Standard C)**
 ```c
@@ -109,9 +109,9 @@ if ($x =~ /pattern/) {
 
 **After (Python-like Visual)**
 ```perl
-if ($x =~ /pattern/)           {
-    print "match"              ;
-}                              ;}
+if ($x =~ /pattern/) {
+    print "match"    ;
+                     ;}
 ```
 
 **Before (Rust)**
@@ -124,9 +124,9 @@ match x {
 
 **After (Python-like Visual)**
 ```rust
-match x                             {
-    Ok(n) => n                      ,
-    Err(_) => continue              ,}
+match x                {
+    Ok(n) => n         ,
+    Err(_) => continue ,}
 ```
 
 **Before (JavaScript)**
@@ -138,8 +138,8 @@ function main() {
 
 **After (Python-like Visual)**
 ```javascript
-function main()                                               {
-    console.log('Hello!')                                     ;}
+function main()           {
+    console.log('Hello!') ;}
 ```
 
 ## Tests
@@ -156,9 +156,9 @@ The repository contains read-only source code test example files and their read-
 | examples/linted-example-6.js| examples/relinted-example-6.js|
 | examples/linted-example-7.go| examples/relinted-example-7.go|
 
-## 📜 Notes
+## Notes
 
 - Does not modify semantic meaning, valid syntax, or compiler behavior
 - Assumes well-formed input with standard brace/semicolon placement
-- Tab expansion uses 4 spaces for consistent terminal rendering
+- Tab expansion attempts to use 4 spaces for consistent terminal rendering
 - Supports C/C++, Perl, Rust, and JavaScript; other languages can be added via different parsers
