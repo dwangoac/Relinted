@@ -18,6 +18,9 @@ test-rust:
 test-js:
     go test ./internal/js/...
 
+test-go:
+    go test ./internal/go/...
+
 run:
     go run ./cmd/relinted/
 

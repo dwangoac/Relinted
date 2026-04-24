@@ -1,6 +1,6 @@
 # Relinted
 
-Relinted reformats C/C++, Perl, Rust, and JavaScript source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
+Relinted reformats C/C++, Perl, Rust, JavaScript, and Go source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
 
 ## Build
 
@@ -13,6 +13,7 @@ just test-c         # runs C/C++ tests only
 just test-perl      # runs Perl tests only
 just test-rust      # runs Rust tests only
 just test-js        # runs JavaScript tests only
+just test-go        # runs Go tests only
 just run <input>    # runs the formatter
 ```
 
@@ -31,12 +32,12 @@ go build -o relinted ./cmd/relinted/
 - **Smart Empty Line Handling**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
 - **Tab & Whitespace Normalization**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
 - **Flexible I/O**: Outputs to `stdout` by default, or writes to a specified output file
-- **Multi-Language**: Supports C/C++, Perl, Rust, and JavaScript with auto-detection from file extension
+- **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, and Go with auto-detection from file extension
 
 ### Arguments
 | Argument        | Description                                                                            |
 | --------------- | -------------------------------------------------------------------------------------- |
-| `-l`            | *(Optional)* Language to use: `c`, `perl`, `rust`, or `js`. Overrides extension detection.   |
+| `-l`            | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, or `go`. Overrides extension detection.   |
 | `<input>`       | Path to the source file to reformat                                                    |
 | `[output]`      | *(Optional)* Path to write the reformatted output; if omitted, output goes to `stdout` |
 
@@ -50,6 +51,7 @@ Relinted auto-detects the language from the file extension:
 | `.pl`, `.pm` | Perl |
 | `.rs` | Rust |
 | `.js` | JavaScript |
+| `.go` | Go |
 
 The `-l` flag overrides extension detection.
 
@@ -61,6 +63,7 @@ The `-l` flag overrides extension detection.
 ./relinted script.pl
 ./relinted game.rs
 ./relinted game.js
+./relinted program.go
 
 # Force a specific language
 ./relinted -l perl source.c
@@ -142,6 +145,20 @@ function main()           {
     console.log('Hello!') ;}
 ```
 
+**Before (Go)**
+```go
+func main() {
+    fmt.Println("Hello!")
+}
+```
+
+**After (Python-like Visual)**
+```go
+func main()           {
+    fmt.Println("Hello!")
+    }
+```
+
 ## Tests
 
 The repository contains read-only source code test example files and their read-only ground truth counterparts; running Relinted on each linted-example file should produce output identical to the matching ground truth relinted-example file:
@@ -161,4 +178,4 @@ The repository contains read-only source code test example files and their read-
 - Does not modify semantic meaning, valid syntax, or compiler behavior
 - Assumes well-formed input with standard brace/semicolon placement
 - Tab expansion attempts to use 4 spaces for consistent terminal rendering
-- Supports C/C++, Perl, Rust, and JavaScript; other languages can be added via different parsers
+- Supports C/C++, Perl, Rust, JavaScript, and Go; other languages can be added via different parsers
