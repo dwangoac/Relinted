@@ -20,7 +20,7 @@ Alternatively:
 
 ```bash
 go build -o relinted ./cmd/relinted/
-./relinted [-l|--lang lang] <input> [output]
+./relinted [-l lang] <input> [output]
 ```
 
 ## Features
@@ -36,7 +36,7 @@ go build -o relinted ./cmd/relinted/
 ### Arguments
 | Argument        | Description                                                                            |
 | --------------- | -------------------------------------------------------------------------------------- |
-| `-l`, `--lang`  | *(Optional)* Language to use: `c`, `perl`, `rust`, or `js`. Overrides extension detection.   |
+| `-l`            | *(Optional)* Language to use: `c`, `perl`, `rust`, or `js`. Overrides extension detection.   |
 | `<input>`       | Path to the source file to reformat                                                    |
 | `[output]`      | *(Optional)* Path to write the reformatted output; if omitted, output goes to `stdout` |
 
@@ -51,7 +51,7 @@ Relinted auto-detects the language from the file extension:
 | `.rs` | Rust |
 | `.js` | JavaScript |
 
-The `-l`/`--lang` flag overrides extension detection.
+The `-l` flag overrides extension detection.
 
 ## Usage Examples
 
@@ -64,7 +64,7 @@ The `-l`/`--lang` flag overrides extension detection.
 
 # Force a specific language
 ./relinted -l perl source.c
-./relinted --lang c script.pl
+./relinted -l c script.pl
 ./relinted -l rust source.c
 ./relinted -l js source.c
 
