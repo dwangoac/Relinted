@@ -148,12 +148,13 @@ The repository contains read-only source code test example files and their read-
 
 | Linted source      | Relinted output      |
 | ------------------ | -------------------- |
-| linted-example-1.c | relinted-example-1.c |
-| linted-example-2.c | relinted-example-2.c |
-| linted-example-3.c | relinted-example-3.c |
-| linted-example-4.pl| relinted-example-4.pl|
-| linted-example-5.rs| relinted-example-5.rs|
-| linted-example-6.js| relinted-example-6.js|
+| examples/linted-example-1.c | examples/relinted-example-1.c |
+| examples/linted-example-2.c | examples/relinted-example-2.c |
+| examples/linted-example-3.c | examples/relinted-example-3.c |
+| examples/linted-example-4.pl| examples/relinted-example-4.pl|
+| examples/linted-example-5.rs| examples/relinted-example-5.rs|
+| examples/linted-example-6.js| examples/relinted-example-6.js|
+| examples/linted-example-7.go| examples/relinted-example-7.go|
 
 ## 📜 Notes
 
