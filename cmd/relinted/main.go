@@ -36,7 +36,6 @@ func detectLanguage(path string) string {
 func main() {
 	var langFlag string
 	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js]")
-	flag.StringVar(&langFlag, "lang", "", "Same as -l")
 	flag.Usage = func() {
 		fmt.Println("Relinted reformats C/C++, Perl, Rust, and JavaScript source code to visually resemble Python.")
 		flag.CommandLine.PrintDefaults()
@@ -45,7 +44,7 @@ func main() {
 
 	args := flag.Args()
 	if len(args) < 1 {
-		fmt.Fprintf(os.Stderr, "Usage: relinted [-l|--lang lang] <input> [output]\n")
+		fmt.Fprintf(os.Stderr, "Usage: relinted [-l lang] <input> [output]\n")
 		os.Exit(1)
 	}
 
