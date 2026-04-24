@@ -15,6 +15,9 @@ test-perl:
 test-rust:
     go test ./internal/rust/...
 
+test-js:
+    go test ./internal/js/...
+
 run:
     go run ./cmd/relinted/
 
