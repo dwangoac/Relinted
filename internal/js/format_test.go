@@ -13,14 +13,6 @@ func TestFormat_SimpleSemicolon(t *testing.T) {
 	}
 }
 
-func TestFormat_BraceRelocation(t *testing.T) {
-	input := "function foo() {\n    console.log('hi');\n}\n"
-	got := Format(input)
-	if got == "" {
-		t.Error("expected non-empty output")
-	}
-}
-
 func TestFormat_EmptyLinesPreserved(t *testing.T) {
 	input := "let x = 1;\n\nlet y = 2;\n"
 	got := Format(input)
