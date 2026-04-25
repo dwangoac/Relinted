@@ -1,6 +1,9 @@
 package js
 
-import "testing"
+import (
+	"os"
+	"testing"
+)
 
 func TestFormat_SimpleSemicolon(t *testing.T) {
 	input := "let x = 1;\n"
@@ -90,5 +93,20 @@ func TestFormat_PunctuationNotInStringExact(t *testing.T) {
 	expected := "console.log(\"}\") ;\n"
 	if got != expected {
 		t.Errorf("got %q, want %q", got, expected)
+	}
+}
+
+func TestFormat_TypeScript_Integration(t *testing.T) {
+	input, err := os.ReadFile("../../examples/linted-example-9.ts")
+	if err != nil {
+		t.Fatalf("failed to read input: %v", err)
+	}
+	expected, err := os.ReadFile("../../examples/relinted-example-9.ts")
+	if err != nil {
+		t.Fatalf("failed to read expected: %v", err)
+	}
+	got := Format(string(input))
+	if got != string(expected) {
+		t.Errorf("TypeScript output mismatch\ngot:\n%s\nexpected:\n%s", got, expected)
 	}
 }
