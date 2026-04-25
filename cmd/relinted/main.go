@@ -28,6 +28,7 @@ var extToLang = map[string]string{
 	".rs":   "rust",
 	".go":   "go",
 	".java": "java",
+	".cs":   "java",
 }
 
 func detectLanguage(path string) string {
@@ -40,9 +41,9 @@ func detectLanguage(path string) string {
 
 func main() {
 	var langFlag string
-	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js, ts, go, java]")
+	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js, ts, go, java, cs]")
 	flag.Usage = func() {
-		fmt.Println("Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, and Java source code to visually resemble Python.")
+		fmt.Println("Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, and C# source code to visually resemble Python.")
 		flag.CommandLine.PrintDefaults()
 	}
 	flag.Parse()
