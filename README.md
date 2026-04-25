@@ -1,6 +1,6 @@
 # Relinted
 
-Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
+Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax and semantics. The output should still compile, but the word should may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm.
 
 ## Build
 
@@ -38,30 +38,30 @@ go build -o relinted ./cmd/relinted/
 - **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift with auto-detection from file extension
 
 ### Arguments
-| Argument        | Description                                                                            |
-| --------------- | -------------------------------------------------------------------------------------- |
-| `-l` | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, `ts`, `go`, `java`, `cs`, `php`, or `swift`. Overrides extension detection.   |
-| `<input>`       | Path to the source file to reformat                                                    |
-| `[output]`      | *(Optional)* Path to write the reformatted output; if omitted, output goes to `stdout` |
+| Argument   | Description                                                                                                                          |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `-l`       | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, `ts`, `go`, `java`, `cs`, `php`, or `swift`. Overrides extension detection. |
+| `<input>`  | Path to the source file to reformat                                                                                                  |
+| `[output]` | *(Optional)* Path to write the reformatted output; if omitted, output goes to `stdout`                                               |
 
 ### Language Detection
 
-Relinted auto-detects the language from the file extension:
+Relinted auto-detects the language via file extension:
 
-| Extension | Language |
-|-----------|----------|
-| `.c`, `.h`, `.cpp`, `.cc` | C |
-| `.pl`, `.pm` | Perl |
-| `.rs` | Rust |
-| `.js` | JavaScript |
-| `.ts` | TypeScript |
-| `.go` | Go |
-| `.java` | Java |
-| `.cs` | C# |
-| `.php` | PHP |
-| `.swift` | Swift |
+| Extension                 | Language   |
+| ------------------------- | ---------- |
+| `.c`, `.h`, `.cpp`, `.cc` | C          |
+| `.pl`, `.pm`              | Perl       |
+| `.rs`                     | Rust       |
+| `.js`                     | JavaScript |
+| `.ts`                     | TypeScript |
+| `.go`                     | Go         |
+| `.java`                   | Java       |
+| `.cs`                     | C#         |
+| `.php`                    | PHP        |
+| `.swift`                  | Swift      |
 
-The `-l` flag overrides extension detection.
+The `-l` flag can be used to override extension detection.
 
 ## Usage Examples
 
@@ -103,7 +103,7 @@ The `-l` flag overrides extension detection.
 4. **Filters & Pads**: Removes lines that only became empty due to brace relocation, then pads each line to `max_len` and appends queued punctuation exactly one space past the maximum width
 5. **Outputs**: Writes the reformatted code to `stdout` or the specified output file
 
-## Example Transformations
+## Example Transformation
 
 **Before (Standard C)**
 ```c
@@ -120,274 +120,29 @@ int main()                  {
     return 0                ;}
 ```
 
-**Before (Perl)**
-```perl
-if ($x =~ /pattern/) {
-    print "match";
-}
-```
-
-**After (Python-like Visual)**
-```perl
-if ($x =~ /pattern/) {
-    print "match"    ;
-                     ;}
-```
-
-**Before (Rust)**
-```rust
-match x {
-    Ok(n) => n,
-    Err(_) => continue,
-}
-```
-
-**After (Python-like Visual)**
-```rust
-match x                {
-    Ok(n) => n         ,
-    Err(_) => continue ,}
-```
-
-**Before (JavaScript)**
-```javascript
-function main() {
-    console.log('Hello!');
-}
-```
-
-**After (Python-like Visual)**
-```javascript
-function main()           {
-    console.log('Hello!') ;}
-```
-
-**Before (Go)**
-```go
-func main() {
-    fmt.Println("Hello!")
-}
-```
-
-**After (Python-like Visual)**
-```go
-func main()           {
-    fmt.Println("Hello!")
-    }
-```
-
-**Before (TypeScript)**
-```typescript
-interface User {
-    name: string;
-    age: number;
-}
-
-function greet(user: User): string {
-    return `Hello, ${user.name}!`;
-}
-```
-
-**After (Python-like Visual)**
-```typescript
-interface User                  {
-    name: string                ;
-    age: number                 ;}
-
-function greet(user: User)      : string {
-    return `Hello, ${user.name}!` ;}
-```
-
-**Before (C#)**
-```csharp
-using System;
-
-public class Calculator {
-    public int Add(int a, int b) {
-        return a + b;
-    }
-}
-```
-
-**After (Python-like Visual)**
-```csharp
-using System                         ;
-
-public class Calculator              {
-    public int Add(int a, int b)     {
-        return a + b                 ;}}}
-```
-
-**Before (PHP)**
-```php
-<?php
-
-class User {
-    private string $name;
-
-    public function __construct(string $name) {
-        $this->name = $name;
-    }
-
-    public function getName(): string {
-        return $this->name;
-    }
-}
-```
-
-**After (Python-like Visual)**
-```php
-<?php                                  ;
-
-class User                             {
-    private string $name               ;
-
-    public function __construct(string $name) {
-        $this->name = $name           ;}
-
-    public function getName(): string  {
-        return $this->name             ;}}}
-```
-
-**Before (Swift)**
-```swift
-class User {
-    var name: String?
-    var age: Int?
-
-    init(name: String, age: Int?) {
-        self.name = name
-        self.age = age
-    }
-}
-```
-
-**After (Python-like Visual)**
-```swift
-class User                            {
-    var name: String?                 ;
-    var age: Int?                     ;
-
-    init(name: String, age: Int?)     {
-        self.name = name              ;
-        self.age = age                ;}}}
-```
-
-**Before (Java)**
-```java
-package com.example;
-
-import java.util.Scanner;
-
-/**
- * Simple calculator demo.
- * Demonstrates Java formatting.
- */
-public class Calculator {
-    private int result = 0;
-    private String label = "Calculator";
-
-    public void add(int n) {
-        result += n;
-        /* Update result */
-    }
-
-    public void subtract(int n) {
-        result -= n;
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public char getSeparator() {
-        char sep = '|';
-        return sep;
-    }
-
-    public static void main(String[] args) {
-        Calculator calc = new Calculator();
-        calc.add(10);
-        calc.add(5);
-
-        String help = """
-            Usage: add <n>, subtract <n>, result
-            """;
-
-        if (calc.getResult() > 0) {
-            System.out.println("Positive!");
-        } else {
-            System.out.println("Zero or negative");
-        }
-    }
-}
-```
-
-**After (Python-like Visual)**
-```java
-package com.example                                ;
-
-import java.util.Scanner                           ;
-
-/**
- * Simple calculator demo.
- * Demonstrates Java formatting.
- */
-public class Calculator                            {
-    private int result = 0                         ;
-    private String label = "Calculator"            ;
-
-    public void add(int n)                         {
-        result += n                                ;
-        /* Update result */                        }
-
-    public void subtract(int n)                    {
-        result -= n                                ;}
-
-    public int getResult()                         {
-        return result                              ;}
-
-    public char getSeparator()                     {
-        char sep = '|'                             ;
-        return sep                                 ;}
-
-    public static void main(String[] args)         {
-        Calculator calc = new Calculator()         ;
-        calc.add(10)                               ;
-        calc.add(5)                                ;
-
-        String help = """
-            Usage: add <n>, subtract <n>, result
-            """                                    ;
-
-        if (calc.getResult() > 0)                  {
-            System.out.println("Positive!")        ;}
-        else                                       {
-            System.out.println("Zero or negative") ;}}}
-```
-
 ## Tests
 
 The repository contains read-only source code test example files and their read-only ground truth counterparts; running Relinted on each linted-example file should produce output identical to the matching ground truth relinted-example file:
 
-| Linted source      | Relinted output      |
-| ------------------ | -------------------- |
-| examples/linted-example-1.c | examples/relinted-example-1.c |
-| examples/linted-example-2.c | examples/relinted-example-2.c |
-| examples/linted-example-3.c | examples/relinted-example-3.c |
-| examples/linted-example-4.pl| examples/relinted-example-4.pl|
-| examples/linted-example-5.rs| examples/relinted-example-5.rs|
-| examples/linted-example-6.js| examples/relinted-example-6.js|
-| examples/linted-example-7.go| examples/relinted-example-7.go|
-| examples/linted-example-8.java | examples/relinted-example-8.java |
-| examples/linted-example-9.ts | examples/relinted-example-9.ts |
-| examples/linted-example-10.cs | examples/relinted-example-10.cs |
-| examples/linted-example-11.php | examples/relinted-example-11.php |
+| Linted source                    | Relinted output                    |
+| -------------------------------- | ---------------------------------- |
+| examples/linted-example-1.c      | examples/relinted-example-1.c      |
+| examples/linted-example-2.c      | examples/relinted-example-2.c      |
+| examples/linted-example-3.c      | examples/relinted-example-3.c      |
+| examples/linted-example-4.pl     | examples/relinted-example-4.pl     |
+| examples/linted-example-5.rs     | examples/relinted-example-5.rs     |
+| examples/linted-example-6.js     | examples/relinted-example-6.js     |
+| examples/linted-example-7.go     | examples/relinted-example-7.go     |
+| examples/linted-example-8.java   | examples/relinted-example-8.java   |
+| examples/linted-example-9.ts     | examples/relinted-example-9.ts     |
+| examples/linted-example-10.cs    | examples/relinted-example-10.cs    |
+| examples/linted-example-11.php   | examples/relinted-example-11.php   |
 | examples/linted-example-12.swift | examples/relinted-example-12.swift |
 
 ## Notes
 
 - Does not modify semantic meaning, valid syntax, or compiler behavior
+- Does not guarantee resulting code will compile but aims to not make breaking changes
 - Assumes well-formed input with standard brace/semicolon placement
 - Tab expansion attempts to use 4 spaces for consistent terminal rendering
 - Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift; other languages can be added via different parsers
