@@ -21,6 +21,9 @@ test-js:
 test-go:
     go test ./internal/go/...
 
+test-java:
+    go test ./internal/java/...
+
 run:
     go run ./cmd/relinted/
 
