@@ -248,14 +248,32 @@ func extractTrailingPunctuation(line string) (punctuation string, remaining stri
 
 	if lastPunctPos >= 0 {
 		rest := line[lastPunctPos+1:]
-		allSpace := true
-		for _, ch := range rest {
-			if !unicode.IsSpace(ch) {
-				allSpace = false
+		allSpaceOrComment := true
+		for i := 0; i < len(rest); i++ {
+			ch := rest[i]
+			if ch == '/' && i+1 < len(rest) {
+				if rest[i+1] == '/' {
+					// Line comment
+					break
+				}
+				if rest[i+1] == '*' {
+					// Block comment - scan to end
+					i++
+					for i+1 < len(rest) && !(rest[i] == '*' && rest[i+1] == '/') {
+						i++
+					}
+					if i+1 < len(rest) {
+						i++
+					}
+					break
+				}
+			}
+			if !unicode.IsSpace(rune(ch)) {
+				allSpaceOrComment = false
 				break
 			}
 		}
-		if allSpace {
+		if allSpaceOrComment {
 			return string(line[lastPunctPos]), line[:lastPunctPos]
 		}
 	}

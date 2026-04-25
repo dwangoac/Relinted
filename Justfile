@@ -30,6 +30,12 @@ test-php:
 test-swift:
     go test ./internal/swift/...
 
+test-ts:
+    go test ./internal/js/...
+
+test-cs:
+    go test ./internal/java/...
+
 run:
     go run ./cmd/relinted/
 

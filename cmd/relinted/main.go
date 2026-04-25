@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"relinted/internal/formatter"
+	"relinted/internal/c"
 	"relinted/internal/go"
 	"relinted/internal/io"
 	"relinted/internal/java"
@@ -74,7 +74,7 @@ func main() {
 	var output string
 	switch lang {
 	case "c":
-		output = formatter.Format(content)
+		output = c.Format(content)
 	case "perl":
 		output = perl.Format(content)
 	case "js":
@@ -89,6 +89,10 @@ func main() {
 		output = php.Format(content)
 	case "swift":
 		output = swift_pkg.Format(content)
+	case "ts":
+		output = js.Format(content)
+	case "cs":
+		output = java.Format(content)
 	default:
 		fmt.Fprintf(os.Stderr, "Error: unsupported language %q\n", lang)
 		fmt.Fprintf(os.Stderr, "Supported languages: c, perl, rust, js, ts, go, java, cs, php, swift\n")

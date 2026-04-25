@@ -9,7 +9,7 @@ import (
 
 // extractTrailingPunctuation scans the line to find the last punctuation character
 // (semicolon, opening brace, or closing brace) that appears in code context
-// (not inside a string, char literal, block comment, or line comment).
+// (not inside a string, char literal, backtick string, block comment, or line comment).
 //
 // Returns (punctuation, remaining).
 func extractTrailingPunctuation(line string) (punctuation string, remaining string) {
@@ -86,6 +86,10 @@ func extractTrailingPunctuation(line string) (punctuation string, remaining stri
 			inLineComment = true
 			continue
 		}
+		if ch == '#' {
+			inLineComment = true
+			continue
+		}
 
 		if ch == '{' || ch == '}' || ch == ';' {
 			lastPunctPos = i
@@ -111,6 +115,9 @@ func extractTrailingPunctuation(line string) (punctuation string, remaining stri
 					}
 					break
 				}
+			}
+			if ch == '#' {
+				break
 			}
 			if !unicode.IsSpace(rune(ch)) {
 				allSpaceOrComment = false

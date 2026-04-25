@@ -9,7 +9,7 @@ import (
 
 // extractTrailingPunctuation scans the line to find the last punctuation character
 // (semicolon, opening brace, or closing brace) that appears in code context
-// (not inside a string, char literal, block comment, or line comment).
+// (not inside a string, char literal, backtick, block comment, or line comment).
 //
 // Swift ? and @ are NOT punctuation — they stay in code tokens.
 // Returns (punctuation, remaining).
@@ -17,6 +17,7 @@ func extractTrailingPunctuation(line string) (punctuation string, remaining stri
 	lastPunctPos := -1
 	inString := false
 	inChar := false
+	inBacktick := false
 	inBlockComment := false
 	inLineComment := false
 
@@ -49,6 +50,13 @@ func extractTrailingPunctuation(line string) (punctuation string, remaining stri
 			continue
 		}
 
+		if inBacktick {
+			if ch == '`' {
+				inBacktick = false
+			}
+			continue
+		}
+
 		if inBlockComment {
 			if ch == '*' && i+1 < len(line) && line[i+1] == '/' {
 				inBlockComment = false
@@ -64,6 +72,10 @@ func extractTrailingPunctuation(line string) (punctuation string, remaining stri
 		}
 		if ch == '\'' {
 			inChar = true
+			continue
+		}
+		if ch == '`' {
+			inBacktick = true
 			continue
 		}
 		if i+1 < len(line) && ch == '/' && line[i+1] == '*' {
