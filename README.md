@@ -1,6 +1,6 @@
 # Relinted
 
-Relinted reformats C/C++, Perl, Rust, JavaScript, Go, and Java source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
+Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
 
 ## Build
 
@@ -14,6 +14,9 @@ just test-perl      # runs Perl tests only
 just test-rust      # runs Rust tests only
 just test-js        # runs JavaScript tests only
 just test-go        # runs Go tests only
+just test-java      # runs Java tests only
+just test-php       # runs PHP tests only
+just test-swift     # runs Swift tests only
 just run <input>    # runs the formatter
 ```
 
@@ -32,12 +35,12 @@ go build -o relinted ./cmd/relinted/
 - **Smart Empty Line Handling**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
 - **Tab & Whitespace Normalization**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
 - **Flexible I/O**: Outputs to `stdout` by default, or writes to a specified output file
-- **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, Go, and Java with auto-detection from file extension
+- **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift with auto-detection from file extension
 
 ### Arguments
 | Argument        | Description                                                                            |
 | --------------- | -------------------------------------------------------------------------------------- |
-| `-l` | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, `go`, or `java`. Overrides extension detection.   |
+| `-l` | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, `ts`, `go`, `java`, `cs`, `php`, or `swift`. Overrides extension detection.   |
 | `<input>`       | Path to the source file to reformat                                                    |
 | `[output]`      | *(Optional)* Path to write the reformatted output; if omitted, output goes to `stdout` |
 
@@ -51,8 +54,12 @@ Relinted auto-detects the language from the file extension:
 | `.pl`, `.pm` | Perl |
 | `.rs` | Rust |
 | `.js` | JavaScript |
+| `.ts` | TypeScript |
 | `.go` | Go |
 | `.java` | Java |
+| `.cs` | C# |
+| `.php` | PHP |
+| `.swift` | Swift |
 
 The `-l` flag overrides extension detection.
 
@@ -64,8 +71,12 @@ The `-l` flag overrides extension detection.
 ./relinted script.pl
 ./relinted game.rs
 ./relinted game.js
+./relinted app.ts
 ./relinted program.go
 ./relinted program.java
+./relinted program.cs
+./relinted index.php
+./relinted main.swift
 ./relinted -l java source.java
 
 # Force a specific language
@@ -73,6 +84,9 @@ The `-l` flag overrides extension detection.
 ./relinted -l c script.pl
 ./relinted -l rust source.c
 ./relinted -l js source.c
+./relinted -l ts source.c
+./relinted -l php source.c
+./relinted -l swift source.c
 
 # Write to output file
 ./relinted input.pl output.pl
@@ -160,6 +174,103 @@ func main() {
 func main()           {
     fmt.Println("Hello!")
     }
+```
+
+**Before (TypeScript)**
+```typescript
+interface User {
+    name: string;
+    age: number;
+}
+
+function greet(user: User): string {
+    return `Hello, ${user.name}!`;
+}
+```
+
+**After (Python-like Visual)**
+```typescript
+interface User                  {
+    name: string                ;
+    age: number                 ;}
+
+function greet(user: User)      : string {
+    return `Hello, ${user.name}!` ;}
+```
+
+**Before (C#)**
+```csharp
+using System;
+
+public class Calculator {
+    public int Add(int a, int b) {
+        return a + b;
+    }
+}
+```
+
+**After (Python-like Visual)**
+```csharp
+using System                         ;
+
+public class Calculator              {
+    public int Add(int a, int b)     {
+        return a + b                 ;}}}
+```
+
+**Before (PHP)**
+```php
+<?php
+
+class User {
+    private string $name;
+
+    public function __construct(string $name) {
+        $this->name = $name;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+}
+```
+
+**After (Python-like Visual)**
+```php
+<?php                                  ;
+
+class User                             {
+    private string $name               ;
+
+    public function __construct(string $name) {
+        $this->name = $name           ;}
+
+    public function getName(): string  {
+        return $this->name             ;}}}
+```
+
+**Before (Swift)**
+```swift
+class User {
+    var name: String?
+    var age: Int?
+
+    init(name: String, age: Int?) {
+        self.name = name
+        self.age = age
+    }
+}
+```
+
+**After (Python-like Visual)**
+```swift
+class User                            {
+    var name: String?                 ;
+    var age: Int?                     ;
+
+    init(name: String, age: Int?)     {
+        self.name = name              ;
+        self.age = age                ;}}}
 ```
 
 **Before (Java)**
@@ -269,10 +380,14 @@ The repository contains read-only source code test example files and their read-
 | examples/linted-example-6.js| examples/relinted-example-6.js|
 | examples/linted-example-7.go| examples/relinted-example-7.go|
 | examples/linted-example-8.java | examples/relinted-example-8.java |
+| examples/linted-example-9.ts | examples/relinted-example-9.ts |
+| examples/linted-example-10.cs | examples/relinted-example-10.cs |
+| examples/linted-example-11.php | examples/relinted-example-11.php |
+| examples/linted-example-12.swift | examples/relinted-example-12.swift |
 
 ## Notes
 
 - Does not modify semantic meaning, valid syntax, or compiler behavior
 - Assumes well-formed input with standard brace/semicolon placement
 - Tab expansion attempts to use 4 spaces for consistent terminal rendering
-- Supports C/C++, Perl, Rust, JavaScript, Go, and Java; other languages can be added via different parsers
+- Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift; other languages can be added via different parsers

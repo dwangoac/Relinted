@@ -15,6 +15,7 @@ import (
 	"relinted/internal/perl"
 	"relinted/internal/php"
 	"relinted/internal/rust"
+	swift_pkg "relinted/internal/swift"
 )
 
 var extToLang = map[string]string{
@@ -31,6 +32,7 @@ var extToLang = map[string]string{
 	".java": "java",
 	".cs":   "java",
 	".php":  "php",
+	".swift": "swift",
 }
 
 func detectLanguage(path string) string {
@@ -43,9 +45,9 @@ func detectLanguage(path string) string {
 
 func main() {
 	var langFlag string
-	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js, ts, go, java, cs, php]")
+	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js, ts, go, java, cs, php, swift]")
 	flag.Usage = func() {
-		fmt.Println("Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, and PHP source code to visually resemble Python.")
+		fmt.Println("Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python.")
 		flag.CommandLine.PrintDefaults()
 	}
 	flag.Parse()
@@ -85,9 +87,11 @@ func main() {
 		output = java.Format(content)
 	case "php":
 		output = php.Format(content)
+	case "swift":
+		output = swift_pkg.Format(content)
 	default:
 		fmt.Fprintf(os.Stderr, "Error: unsupported language %q\n", lang)
-		fmt.Fprintf(os.Stderr, "Supported languages: c, perl, rust, js, ts, go, java, cs, php\n")
+		fmt.Fprintf(os.Stderr, "Supported languages: c, perl, rust, js, ts, go, java, cs, php, swift\n")
 		os.Exit(1)
 	}
 

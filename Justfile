@@ -24,6 +24,12 @@ test-go:
 test-java:
     go test ./internal/java/...
 
+test-php:
+    go test ./internal/php/...
+
+test-swift:
+    go test ./internal/swift/...
+
 run:
     go run ./cmd/relinted/
 
