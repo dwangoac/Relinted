@@ -1,6 +1,6 @@
 # Relinted
 
-Relinted reformats C/C++, Perl, Rust, JavaScript, and Go source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
+Relinted reformats C/C++, Perl, Rust, JavaScript, Go, and Java source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right of the codebase. This creates a clean, Python-like visual structure while preserving the original syntax and semantics.
 
 ## Build
 
@@ -32,12 +32,12 @@ go build -o relinted ./cmd/relinted/
 - **Smart Empty Line Handling**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
 - **Tab & Whitespace Normalization**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
 - **Flexible I/O**: Outputs to `stdout` by default, or writes to a specified output file
-- **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, and Go with auto-detection from file extension
+- **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, Go, and Java with auto-detection from file extension
 
 ### Arguments
 | Argument        | Description                                                                            |
 | --------------- | -------------------------------------------------------------------------------------- |
-| `-l`            | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, or `go`. Overrides extension detection.   |
+| `-l` | *(Optional)* Language to use: `c`, `perl`, `rust`, `js`, `go`, or `java`. Overrides extension detection.   |
 | `<input>`       | Path to the source file to reformat                                                    |
 | `[output]`      | *(Optional)* Path to write the reformatted output; if omitted, output goes to `stdout` |
 
@@ -52,6 +52,7 @@ Relinted auto-detects the language from the file extension:
 | `.rs` | Rust |
 | `.js` | JavaScript |
 | `.go` | Go |
+| `.java` | Java |
 
 The `-l` flag overrides extension detection.
 
@@ -64,6 +65,8 @@ The `-l` flag overrides extension detection.
 ./relinted game.rs
 ./relinted game.js
 ./relinted program.go
+./relinted program.java
+./relinted -l java source.java
 
 # Force a specific language
 ./relinted -l perl source.c
@@ -159,6 +162,99 @@ func main()           {
     }
 ```
 
+**Before (Java)**
+```java
+package com.example;
+
+import java.util.Scanner;
+
+/**
+ * Simple calculator demo.
+ * Demonstrates Java formatting.
+ */
+public class Calculator {
+    private int result = 0;
+    private String label = "Calculator";
+
+    public void add(int n) {
+        result += n;
+        /* Update result */
+    }
+
+    public void subtract(int n) {
+        result -= n;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public char getSeparator() {
+        char sep = '|';
+        return sep;
+    }
+
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        calc.add(10);
+        calc.add(5);
+
+        String help = """
+            Usage: add <n>, subtract <n>, result
+            """;
+
+        if (calc.getResult() > 0) {
+            System.out.println("Positive!");
+        } else {
+            System.out.println("Zero or negative");
+        }
+    }
+}
+```
+
+**After (Python-like Visual)**
+```java
+package com.example                                ;
+
+import java.util.Scanner                           ;
+
+/**
+ * Simple calculator demo.
+ * Demonstrates Java formatting.
+ */
+public class Calculator                            {
+    private int result = 0                         ;
+    private String label = "Calculator"            ;
+
+    public void add(int n)                         {
+        result += n                                ;
+        /* Update result */                        }
+
+    public void subtract(int n)                    {
+        result -= n                                ;}
+
+    public int getResult()                         {
+        return result                              ;}
+
+    public char getSeparator()                     {
+        char sep = '|'                             ;
+        return sep                                 ;}
+
+    public static void main(String[] args)         {
+        Calculator calc = new Calculator()         ;
+        calc.add(10)                               ;
+        calc.add(5)                                ;
+
+        String help = """
+            Usage: add <n>, subtract <n>, result
+            """                                    ;
+
+        if (calc.getResult() > 0)                  {
+            System.out.println("Positive!")        ;}
+        else                                       {
+            System.out.println("Zero or negative") ;}}}
+```
+
 ## Tests
 
 The repository contains read-only source code test example files and their read-only ground truth counterparts; running Relinted on each linted-example file should produce output identical to the matching ground truth relinted-example file:
@@ -172,10 +268,11 @@ The repository contains read-only source code test example files and their read-
 | examples/linted-example-5.rs| examples/relinted-example-5.rs|
 | examples/linted-example-6.js| examples/relinted-example-6.js|
 | examples/linted-example-7.go| examples/relinted-example-7.go|
+| examples/linted-example-8.java | examples/relinted-example-8.java |
 
 ## Notes
 
 - Does not modify semantic meaning, valid syntax, or compiler behavior
 - Assumes well-formed input with standard brace/semicolon placement
 - Tab expansion attempts to use 4 spaces for consistent terminal rendering
-- Supports C/C++, Perl, Rust, JavaScript, and Go; other languages can be added via different parsers
+- Supports C/C++, Perl, Rust, JavaScript, Go, and Java; other languages can be added via different parsers
