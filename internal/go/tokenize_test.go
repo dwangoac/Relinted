@@ -23,60 +23,60 @@ func checkSegments(t *testing.T, input string, expected []tokenizer.Segment) {
 
 func TestLineComment(t *testing.T) {
 	checkSegments(t, "// comment\n", []tokenizer.Segment{
-		{tokenizer.CommentLine, "// comment\n"},
+		{Type: tokenizer.CommentLine, Text: "// comment\n"},
 	})
 }
 
 func TestBlockComment(t *testing.T) {
 	checkSegments(t, "/* block comment */", []tokenizer.Segment{
-		{tokenizer.CommentBlock, "/* block comment */"},
+		{Type: tokenizer.CommentBlock, Text: "/* block comment */"},
 	})
 }
 
 func TestDoubleQuotedString(t *testing.T) {
 	checkSegments(t, "\"hello\"", []tokenizer.Segment{
-		{tokenizer.String, "\"hello\""},
+		{Type: tokenizer.String, Text: "\"hello\""},
 	})
 }
 
 func TestRuneLiteral(t *testing.T) {
 	checkSegments(t, "'a'", []tokenizer.Segment{
-		{tokenizer.Char, "'a'"},
+		{Type: tokenizer.Char, Text: "'a'"},
 	})
 }
 
 func TestRawStringLiteral(t *testing.T) {
 	checkSegments(t, "`hello`", []tokenizer.Segment{
-		{tokenizer.String, "`hello`"},
+		{Type: tokenizer.String, Text: "`hello`"},
 	})
 }
 
 func TestRawStringWithSpecialChars(t *testing.T) {
 	checkSegments(t, "`fmt.Println(\"}\")`", []tokenizer.Segment{
-		{tokenizer.String, "`fmt.Println(\"}\")`"},
+		{Type: tokenizer.String, Text: "`fmt.Println(\"}\")`"},
 	})
 }
 
 func TestRawStringMultiline(t *testing.T) {
 	input := "`line1\nline2\nline3`"
 	checkSegments(t, input, []tokenizer.Segment{
-		{tokenizer.String, "`line1\nline2\nline3`"},
+		{Type: tokenizer.String, Text: "`line1\nline2\nline3`"},
 	})
 }
 
 func TestCodeSegment(t *testing.T) {
 	checkSegments(t, "func main() {", []tokenizer.Segment{
-		{tokenizer.Code, "func main() {"},
+		{Type: tokenizer.Code, Text: "func main() {"},
 	})
 }
 
 func TestMixedInput(t *testing.T) {
 	input := "func main() {\n\t// print hello\n\tfmt.Println(\"hello\")\n}"
 	checkSegments(t, input, []tokenizer.Segment{
-		{tokenizer.Code, "func main() {\n\t"},
-		{tokenizer.CommentLine, "// print hello\n"},
-		{tokenizer.Code, "\tfmt.Println("},
-		{tokenizer.String, "\"hello\""},
-		{tokenizer.Code, ")\n}"},
+		{Type: tokenizer.Code, Text: "func main() {\n\t"},
+		{Type: tokenizer.CommentLine, Text: "// print hello\n"},
+		{Type: tokenizer.Code, Text: "\tfmt.Println("},
+		{Type: tokenizer.String, Text: "\"hello\""},
+		{Type: tokenizer.Code, Text: ")\n}"},
 	})
 }

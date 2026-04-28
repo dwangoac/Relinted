@@ -18,7 +18,7 @@ func Tokenize(input string) []tokenizer.Segment {
 			if j < len(input) {
 				j++
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.CommentLine, input[i:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.CommentLine, Text: input[i:j]})
 			i = j
 
 		case i+1 < len(input) && input[i] == '/' && input[i+1] == '*':
@@ -29,7 +29,7 @@ func Tokenize(input string) []tokenizer.Segment {
 			if j+1 < len(input) {
 				j += 2
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.CommentBlock, input[i:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.CommentBlock, Text: input[i:j]})
 			i = j
 
 		case input[i] == '"':
@@ -40,7 +40,7 @@ func Tokenize(input string) []tokenizer.Segment {
 			if j < len(input) {
 				j++
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.String, input[i:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.String, Text: input[i:j]})
 			i = j
 
 		case input[i] == '\'':
@@ -54,7 +54,7 @@ func Tokenize(input string) []tokenizer.Segment {
 			if j < len(input) {
 				j++
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.Char, input[i:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.Char, Text: input[i:j]})
 			i = j
 
 		case input[i] == '`':
@@ -65,7 +65,7 @@ func Tokenize(input string) []tokenizer.Segment {
 			if j < len(input) {
 				j++
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.String, input[i:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.String, Text: input[i:j]})
 			i = j
 
 		case i+2 < len(input) && input[i] == '<' && input[i+1] == '<' && input[i+2] == '<':
@@ -86,7 +86,7 @@ func Tokenize(input string) []tokenizer.Segment {
 				j++
 			}
 			if j == identStart {
-				segments = append(segments, tokenizer.Segment{tokenizer.Code, input[i : i+1]})
+				segments = append(segments, tokenizer.Segment{Type: tokenizer.Code, Text: input[i : i+1]})
 				i++
 				continue
 			}
@@ -99,7 +99,7 @@ func Tokenize(input string) []tokenizer.Segment {
 						pos := k + len(ident)
 						if pos < len(input) && input[pos] == ';' {
 							j = pos + 1
-							segments = append(segments, tokenizer.Segment{tokenizer.String, input[i:j]})
+							segments = append(segments, tokenizer.Segment{Type: tokenizer.String, Text: input[i:j]})
 							i = j
 							found = true
 							break
@@ -109,7 +109,7 @@ func Tokenize(input string) []tokenizer.Segment {
 				j++
 			}
 			if !found {
-				segments = append(segments, tokenizer.Segment{tokenizer.String, input[i:]})
+				segments = append(segments, tokenizer.Segment{Type: tokenizer.String, Text: input[i:]})
 				i = len(input)
 			}
 
@@ -136,7 +136,7 @@ func Tokenize(input string) []tokenizer.Segment {
 				}
 				j++
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.Code, input[tagStart:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.Code, Text: input[tagStart:j]})
 			i = j
 
 		default:
@@ -160,7 +160,7 @@ func Tokenize(input string) []tokenizer.Segment {
 				}
 				j++
 			}
-			segments = append(segments, tokenizer.Segment{tokenizer.Code, input[i:j]})
+			segments = append(segments, tokenizer.Segment{Type: tokenizer.Code, Text: input[i:j]})
 			i = j
 		}
 	}

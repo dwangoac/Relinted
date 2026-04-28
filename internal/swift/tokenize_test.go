@@ -24,44 +24,44 @@ func checkSegments(t *testing.T, input string, expected []tokenizer.Segment) {
 
 func TestTokenize_CodeOnly(t *testing.T) {
 	checkSegments(t, "let x = 0", []tokenizer.Segment{
-		{tokenizer.Code, "let x = 0"},
+		{Type: tokenizer.Code, Text: "let x = 0"},
 	})
 }
 
 func TestTokenize_OptionalChaining(t *testing.T) {
 	checkSegments(t, "foo?.bar", []tokenizer.Segment{
-		{tokenizer.Code, "foo?.bar"},
+		{Type: tokenizer.Code, Text: "foo?.bar"},
 	})
 }
 
 func TestTokenize_NilCoalescing(t *testing.T) {
 	checkSegments(t, "foo ?? bar", []tokenizer.Segment{
-		{tokenizer.Code, "foo ?? bar"},
+		{Type: tokenizer.Code, Text: "foo ?? bar"},
 	})
 }
 
 func TestTokenize_Attribute(t *testing.T) {
 	checkSegments(t, "@objc func hello()", []tokenizer.Segment{
-		{tokenizer.Code, "@objc func hello()"},
+		{Type: tokenizer.Code, Text: "@objc func hello()"},
 	})
 }
 
 func TestTokenize_AttributeMultiple(t *testing.T) {
 	checkSegments(t, "@escaping @MainActor func()", []tokenizer.Segment{
-		{tokenizer.Code, "@escaping @MainActor func()"},
+		{Type: tokenizer.Code, Text: "@escaping @MainActor func()"},
 	})
 }
 
 func TestTokenize_StringLiteral(t *testing.T) {
 	checkSegments(t, "let s = \"hello\"", []tokenizer.Segment{
-		{tokenizer.Code, "let s = "},
-		{tokenizer.String, "\"hello\""},
+		{Type: tokenizer.Code, Text: "let s = "},
+		{Type: tokenizer.String, Text: "\"hello\""},
 	})
 }
 
 func TestTokenize_StringWithEscape(t *testing.T) {
 	checkSegments(t, "\"hello\\nworld\"", []tokenizer.Segment{
-		{tokenizer.String, "\"hello\\nworld\""},
+		{Type: tokenizer.String, Text: "\"hello\\nworld\""},
 	})
 }
 
@@ -69,36 +69,36 @@ func TestTokenize_StringInterpolationNotParsed(t *testing.T) {
 	// String interpolation \(...) is inside a string literal, so the \ is
 	// consumed by escape handling — the whole thing stays as one String token.
 	checkSegments(t, "\"\\(foo)\"", []tokenizer.Segment{
-		{tokenizer.String, "\"\\(foo)\""},
+		{Type: tokenizer.String, Text: "\"\\(foo)\""},
 	})
 }
 
 func TestTokenize_CharLiteral(t *testing.T) {
 	checkSegments(t, "let c = 'a'", []tokenizer.Segment{
-		{tokenizer.Code, "let c = "},
-		{tokenizer.Char, "'a'"},
+		{Type: tokenizer.Code, Text: "let c = "},
+		{Type: tokenizer.Char, Text: "'a'"},
 	})
 }
 
 func TestTokenize_LineComment(t *testing.T) {
 	checkSegments(t, "// comment\nfoo", []tokenizer.Segment{
-		{tokenizer.CommentLine, "// comment\n"},
-		{tokenizer.Code, "foo"},
+		{Type: tokenizer.CommentLine, Text: "// comment\n"},
+		{Type: tokenizer.Code, Text: "foo"},
 	})
 }
 
 func TestTokenize_BlockComment(t *testing.T) {
 	checkSegments(t, "/* block */", []tokenizer.Segment{
-		{tokenizer.CommentBlock, "/* block */"},
+		{Type: tokenizer.CommentBlock, Text: "/* block */"},
 	})
 }
 
 func TestTokenize_Mixed(t *testing.T) {
 	checkSegments(t, "@objc let x = \"hi\" // end\n", []tokenizer.Segment{
-		{tokenizer.Code, "@objc let x = "},
-		{tokenizer.String, "\"hi\""},
-		{tokenizer.Code, " "},
-		{tokenizer.CommentLine, "// end\n"},
+		{Type: tokenizer.Code, Text: "@objc let x = "},
+		{Type: tokenizer.String, Text: "\"hi\""},
+		{Type: tokenizer.Code, Text: " "},
+		{Type: tokenizer.CommentLine, Text: "// end\n"},
 	})
 }
 
@@ -111,51 +111,51 @@ func TestTokenize_Empty(t *testing.T) {
 
 func TestTokenize_OptionalChainingWithNilCoalescing(t *testing.T) {
 	checkSegments(t, "foo?.bar ?? baz", []tokenizer.Segment{
-		{tokenizer.Code, "foo?.bar ?? baz"},
+		{Type: tokenizer.Code, Text: "foo?.bar ?? baz"},
 	})
 }
 
 func TestTokenize_AttributeWithOptional(t *testing.T) {
 	checkSegments(t, "@objc var x: String?", []tokenizer.Segment{
-		{tokenizer.Code, "@objc var x: String?"},
+		{Type: tokenizer.Code, Text: "@objc var x: String?"},
 	})
 }
 
 func TestTokenize_MultipleAttributes(t *testing.T) {
 	checkSegments(t, "@State var count = 0", []tokenizer.Segment{
-		{tokenizer.Code, "@State var count = 0"},
+		{Type: tokenizer.Code, Text: "@State var count = 0"},
 	})
 }
 
 func TestTokenize_CharWithEscape(t *testing.T) {
 	checkSegments(t, "'\\n'", []tokenizer.Segment{
-		{tokenizer.Char, "'\\n'"},
+		{Type: tokenizer.Char, Text: "'\\n'"},
 	})
 }
 
 func TestTokenize_CommentsAroundCode(t *testing.T) {
 	checkSegments(t, "/* start */ let x = 5 // end\n", []tokenizer.Segment{
-		{tokenizer.CommentBlock, "/* start */"},
-		{tokenizer.Code, " let x = 5 "},
-		{tokenizer.CommentLine, "// end\n"},
+		{Type: tokenizer.CommentBlock, Text: "/* start */"},
+		{Type: tokenizer.Code, Text: " let x = 5 "},
+		{Type: tokenizer.CommentLine, Text: "// end\n"},
 	})
 }
 
 func TestTokenize_JustQuestionMark(t *testing.T) {
 	// A standalone ? in code stays as Code (not punctuation)
 	checkSegments(t, "?", []tokenizer.Segment{
-		{tokenizer.Code, "?"},
+		{Type: tokenizer.Code, Text: "?"},
 	})
 }
 
 func TestTokenize_DoubleQuestionMark(t *testing.T) {
 	checkSegments(t, "??", []tokenizer.Segment{
-		{tokenizer.Code, "??"},
+		{Type: tokenizer.Code, Text: "??"},
 	})
 }
 
 func TestTokenize_AttributeAtStart(t *testing.T) {
 	checkSegments(t, "@property var name: String", []tokenizer.Segment{
-		{tokenizer.Code, "@property var name: String"},
+		{Type: tokenizer.Code, Text: "@property var name: String"},
 	})
 }

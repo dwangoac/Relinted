@@ -13,3 +13,6 @@ go.test
 
 # Git worktree directories
 .worktree/
+
+# Release artifacts
+dist/

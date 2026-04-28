@@ -188,9 +188,9 @@ func TestSplitLines_TrailingNewline(t *testing.T) {
 
 func TestReconstructText(t *testing.T) {
 	segments := []tokenizer.Segment{
-		{tokenizer.Code, "echo "},
-		{tokenizer.Code, "\"hi\";"},
-		{tokenizer.CommentLine, "\n"},
+		{Type: tokenizer.Code, Text: "echo "},
+		{Type: tokenizer.Code, Text: "\"hi\";"},
+		{Type: tokenizer.CommentLine, Text: "\n"},
 	}
 	got := reconstructText(segments)
 	if got != "echo \"hi\";\n" {

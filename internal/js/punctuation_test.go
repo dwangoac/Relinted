@@ -163,9 +163,9 @@ func TestSplitLines_TrailingNewline(t *testing.T) {
 
 func TestReconstructText(t *testing.T) {
 	segments := []tokenizer.Segment{
-		{tokenizer.Code, "let "},
-		{tokenizer.Code, "x = "},
-		{tokenizer.Code, "1;\n"},
+		{Type: tokenizer.Code, Text: "let "},
+		{Type: tokenizer.Code, Text: "x = "},
+		{Type: tokenizer.Code, Text: "1;\n"},
 	}
 	got := reconstructText(segments)
 	if got != "let x = 1;\n" {

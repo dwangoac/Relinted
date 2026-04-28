@@ -23,79 +23,79 @@ func checkSegments(t *testing.T, input string, expected []tokenizer.Segment) {
 
 func TestPHP_LineComment(t *testing.T) {
 	checkSegments(t, "// comment\n", []tokenizer.Segment{
-		{tokenizer.CommentLine, "// comment\n"},
+		{Type: tokenizer.CommentLine, Text: "// comment\n"},
 	})
 }
 
 func TestPHP_BlockComment(t *testing.T) {
 	checkSegments(t, "/* block */", []tokenizer.Segment{
-		{tokenizer.CommentBlock, "/* block */"},
+		{Type: tokenizer.CommentBlock, Text: "/* block */"},
 	})
 }
 
 func TestPHP_DoubleQuotedString(t *testing.T) {
 	checkSegments(t, `"Hello $name"`, []tokenizer.Segment{
-		{tokenizer.String, `"Hello $name"`},
+		{Type: tokenizer.String, Text: `"Hello $name"`},
 	})
 }
 
 func TestPHP_SingleQuotedString(t *testing.T) {
 	checkSegments(t, `'literal'`, []tokenizer.Segment{
-		{tokenizer.Char, `'literal'`},
+		{Type: tokenizer.Char, Text: `'literal'`},
 	})
 }
 
 func TestPHP_SingleQuotedStringWithEscape(t *testing.T) {
 	checkSegments(t, `'it\'s'`, []tokenizer.Segment{
-		{tokenizer.Char, `'it\'s'`},
+		{Type: tokenizer.Char, Text: `'it\'s'`},
 	})
 }
 
 func TestPHP_BacktickString(t *testing.T) {
 	checkSegments(t, "`cmd`", []tokenizer.Segment{
-		{tokenizer.String, "`cmd`"},
+		{Type: tokenizer.String, Text: "`cmd`"},
 	})
 }
 
 func TestPHP_EchoTag(t *testing.T) {
 	checkSegments(t, "<?= $x ?>", []tokenizer.Segment{
-		{tokenizer.Code, "<?= $x ?>"},
+		{Type: tokenizer.Code, Text: "<?= $x ?>"},
 	})
 }
 
 func TestPHP_OpenTag(t *testing.T) {
 	checkSegments(t, "<?php echo 1; ?>", []tokenizer.Segment{
-		{tokenizer.Code, "<?php echo 1; ?>"},
+		{Type: tokenizer.Code, Text: "<?php echo 1; ?>"},
 	})
 }
 
 func TestPHP_ShortOpenTag(t *testing.T) {
 	checkSegments(t, "<? echo 1; ?>", []tokenizer.Segment{
-		{tokenizer.Code, "<? echo 1; ?>"},
+		{Type: tokenizer.Code, Text: "<? echo 1; ?>"},
 	})
 }
 
 func TestPHP_Heredoc(t *testing.T) {
 	checkSegments(t, "<<<EOT\nhello\nworld\nEOT;", []tokenizer.Segment{
-		{tokenizer.String, "<<<EOT\nhello\nworld\nEOT;"},
+		{Type: tokenizer.String, Text: "<<<EOT\nhello\nworld\nEOT;"},
 	})
 }
 
 func TestPHP_HeredocQuoted(t *testing.T) {
 	checkSegments(t, "<<<'EOT'\nhello\nworld\nEOT;", []tokenizer.Segment{
-		{tokenizer.String, "<<<'EOT'\nhello\nworld\nEOT;"},
+		{Type: tokenizer.String, Text: "<<<'EOT'\nhello\nworld\nEOT;"},
 	})
 }
 
 func TestPHP_HeredocWithDollar(t *testing.T) {
 	checkSegments(t, "<<<EOT\nhello\nEOT;", []tokenizer.Segment{
-		{tokenizer.String, "<<<EOT\nhello\nEOT;"},
+		{Type: tokenizer.String, Text: "<<<EOT\nhello\nEOT;"},
 	})
 }
 
 func TestPHP_CodeOnly(t *testing.T) {
 	checkSegments(t, "echo 1;", []tokenizer.Segment{
-		{tokenizer.Code, "echo 1;"},
+		{Type: tokenizer.Code, Text: "echo 1;"},
 	})
 }
 
@@ -108,9 +108,9 @@ func TestPHP_Empty(t *testing.T) {
 
 func TestPHP_Mixed(t *testing.T) {
 	checkSegments(t, "<?php echo \"hi\"; // end\n", []tokenizer.Segment{
-		{tokenizer.Code, "<?php echo "},
-		{tokenizer.String, "\"hi\""},
-		{tokenizer.Code, "; "},
-		{tokenizer.CommentLine, "// end\n"},
+		{Type: tokenizer.Code, Text: "<?php echo "},
+		{Type: tokenizer.String, Text: "\"hi\""},
+		{Type: tokenizer.Code, Text: "; "},
+		{Type: tokenizer.CommentLine, Text: "// end\n"},
 	})
 }
