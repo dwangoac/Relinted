@@ -18,6 +18,8 @@ import (
 	swift_pkg "relinted/internal/swift"
 )
 
+var version string = "dev"
+
 var extToLang = map[string]string{
 	".c":    "c",
 	".h":    "c",
@@ -45,12 +47,19 @@ func detectLanguage(path string) string {
 
 func main() {
 	var langFlag string
+	var showVersion bool
 	flag.StringVar(&langFlag, "l", "", "Language to use (overrides extension detection) [c, perl, rust, js, ts, go, java, cs, php, swift]")
+	flag.BoolVar(&showVersion, "version", false, "Print version and exit")
 	flag.Usage = func() {
 		fmt.Println("Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python.")
 		flag.CommandLine.PrintDefaults()
 	}
 	flag.Parse()
+
+	if showVersion {
+		fmt.Printf("relinted version %s\n", version)
+		os.Exit(0)
+	}
 
 	args := flag.Args()
 	if len(args) < 1 {

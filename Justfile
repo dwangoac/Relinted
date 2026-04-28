@@ -1,7 +1,7 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
 build:
-    go build -o relinted ./cmd/relinted/
+    go build -ldflags "-X main.version=$(git describe --tags)" -o relinted ./cmd/relinted/
 
 test:
     go test ./internal/... ./cmd/...

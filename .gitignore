@@ -2,7 +2,7 @@
 /relinted
 
 # Debug files
-debug_maxlen.go
+internal/tokenizer/debug_maxlen.go
 
 # Session/plan files
 .opencode/
