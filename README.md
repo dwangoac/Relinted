@@ -1,7 +1,7 @@
 # Relinted
-Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax and semantics. See Releases for Linux, macOS, and Windows builds.
+Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax. The output should still compile, but the word "should" may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm.
 
-The output should still compile, but the word "should" may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm.
+ee Releases for Linux, macOS, and Windows builds.
 
 ## Features
 - **Relocates braces**: Moves leading `{` and `}` to the end of the previous line
