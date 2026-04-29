@@ -1,15 +1,16 @@
 # Relinted
-Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax and semantics. See dist for Linux, macOS, and Windows builds.
+Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax and semantics. See Releases for Linux, macOS, and Windows builds.
+
 The output should still compile, but the word "should" may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm.
 
 ## Features
-- **Brace Relocation**: Moves leading `{` and `}` to the end of the previous line
-- **Right Alignment**: Aligns trailing `;`, `{`, and `}` one space past the longest line in the file
-- **Indentation Preservation**: Maintains original indentation when relocating leading braces
-- **Smart Empty Line Handling**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
-- **Tab & Whitespace Normalization**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
-- **Flexible I/O**: Outputs to `stdout` by default, or writes to a specified output file
-- **Multi-Language**: Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift with auto-detection from file extension
+- **Relocates braces**: Moves leading `{` and `}` to the end of the previous line
+- **Right alignment**: Aligns trailing `;`, `{`, and `}` one space past the longest line in the file
+- **Preserves indentation**: Maintains original indentation when relocating leading braces
+- **Removes new empty lines**: Removes lines that only become empty after brace relocation, but keeps originally empty lines
+- **Normalizes tabs**: Expands tabs to 4 spaces and strips trailing whitespace for consistent visual alignment
+- **Outputs wherever**: Outputs to `stdout` by default, or writes to a specified output file
+- **Language autodetection**: Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift with auto-detection from file extension
 
 ### Arguments
 | Argument   | Description                                                                                                                          |
@@ -98,10 +99,22 @@ The repository contains example read-only source code test files and their read-
 | examples/linted-example-11.php   | examples/relinted-example-11.php   |
 | examples/linted-example-12.swift | examples/relinted-example-12.swift |
 
+Tests can be executed with `just test`:
+just test           # runs all unit tests
+just test-c         # runs C/C++ tests only
+just test-perl      # runs Perl tests only
+just test-rust      # runs Rust tests only
+just test-js        # runs JavaScript tests only
+just test-go        # runs Go tests only
+just test-java      # runs Java tests only
+just test-php       # runs PHP tests only
+just test-swift     # runs Swift tests only
+just run <input>    # runs the formatter
+
 ## Notes
 - Does not modify semantic meaning, valid syntax, or compiler behavior
 - Does not guarantee resulting code will compile but aims to not make breaking changes
 - Assumes well-formed input with standard brace/semicolon placement
 - Tab expansion attempts to use 4 spaces for consistent terminal rendering
 - Supports C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift; other languages can be added via different parsers
-- Does not guarantee sanity of code or user
+- Relinted may exhibit clank jank and makes no guarantee about the sanity of the code, the supposed coder, or the user
