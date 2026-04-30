@@ -1,7 +1,22 @@
 # Relinted
-Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax. The output should still compile, but the word "should" may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm.
+Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax.
 
-See Releases for Linux, macOS, and Windows builds (which are safe to play with and legal everywhere questionable taste has not been outlawed).
+Linted C:
+```c
+int main() {
+    printf("Hello World\n");
+    return 0;
+}
+```
+
+Relinted C:
+```c
+int main()                  {
+    printf("Hello World\n") ;
+    return 0                ;}
+```
+
+The output should still compile, but the word "should" may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm. See Releases for Linux, macOS, and Windows builds (which are safe to play with and legal everywhere questionable taste has not been outlawed).
 
 ## Features
 - **Relocates braces**: Moves leading `{` and `}` to the end of the previous line
@@ -29,22 +44,6 @@ See Releases for Linux, macOS, and Windows builds (which are safe to play with a
 
 # Write to output file
 ./relinted input.rs output.rs
-```
-
-## Example Transformation
-**Before**
-```c
-int main() {
-    printf("Hello World\n");
-    return 0;
-}
-```
-
-**Relinted**
-```c
-int main()                  {
-    printf("Hello World\n") ;
-    return 0                ;}
 ```
 
 ### Language Detection
