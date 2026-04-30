@@ -1,7 +1,7 @@
 # Relinted
 Relinted reformats C/C++, Perl, Rust, JavaScript, TypeScript, Go, Java, C#, PHP, and Swift source code to visually resemble Python by aligning braces (`{`, `}`) and semicolons (`;`) to the far right. This creates a clean, Python-like visual structure while preserving the original syntax. The output should still compile, but the word "should" may be doing some heavy lifting. Not for production. Output may contain syntax known to the state of California to cause code cancer, cert defects, or other deconstructive harm.
 
-ee Releases for Linux, macOS, and Windows builds.
+See Releases for Linux, macOS, and Windows builds (which are safe to play with and legal everywhere questionable taste has not been outlawed).
 
 ## Features
 - **Relocates braces**: Moves leading `{` and `}` to the end of the previous line
@@ -32,7 +32,7 @@ ee Releases for Linux, macOS, and Windows builds.
 ```
 
 ## Example Transformation
-**Before (Standard C)**
+**Before**
 ```c
 int main() {
     printf("Hello World\n");
@@ -40,7 +40,7 @@ int main() {
 }
 ```
 
-**After (Python-like Visual)**
+**Relinted**
 ```c
 int main()                  {
     printf("Hello World\n") ;
@@ -66,19 +66,11 @@ Relinted auto-detects the language via file extension:
 The `-l` flag can be used to override extension detection.
 
 ## Manual Build
-
 Building manually requires Go 1.22 or higher.
 
-With Just:
 ```bash
-just build          # compiles the relinted binary
-```
-
-Alternatively:
-
-```bash
-go build -o relinted ./cmd/relinted/
-./relinted [-l lang] <input> [output]
+just build                           # Build with Just
+go build -o relinted ./cmd/relinted/ # Or build directly
 ```
 
 ## Tests
